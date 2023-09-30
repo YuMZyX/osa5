@@ -85,6 +85,20 @@ const App = () => {
       })
   }
 
+  const deleteBlog = (id) => {
+    const blog = blogs.find(b => b.id === id)
+    console.log(blog)
+    if (window.confirm(`Remove ${blog.title}`)) {
+      blogService.remove(id)
+        .then(() => {
+          setRender(Math.random())
+          notify(`Deleted ${blog.title}`)
+        })
+    } else {
+      console.log('Deleting a blog was cancelled')
+    }
+  }
+
   if (user === null) {
     return (
       <div>
@@ -115,7 +129,7 @@ const App = () => {
       </Togglable>
       <br />
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} updateBlog={updateBlog} />
+        <Blog key={blog.id} blog={blog} updateBlog={updateBlog} deleteBlog={deleteBlog} />
       )}
     </div>
   )

@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
-const Blog = ({ blog, updateBlog }) => {
+const Blog = ({ blog, updateBlog, deleteBlog }) => {
   const [blogVisible, setBlogVisible] = useState(false)
-  const [removeVisible, setRemoveVisible] = useState(false)
+  //const [removeVisible, setRemoveVisible] = useState(false)
 
   const hideWhenVisible = { display: blogVisible ? 'none' : '' }
   const showWhenVisible = { display: blogVisible ? '' : 'none' }
@@ -16,6 +16,10 @@ const Blog = ({ blog, updateBlog }) => {
     updateBlog(blog.id, updatedBlog)
   }
 
+  const remove = () => {
+    deleteBlog(blog.id)
+  }
+
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -24,10 +28,16 @@ const Blog = ({ blog, updateBlog }) => {
     marginBottom: 5
   }
 
-  const loggedUserJSON = window.localStorage.getItem('loggedBloglistUser')
-  const user = JSON.parse(loggedUserJSON)
-  if (blog.user.username === user.username) {
-    //setRemoveVisible(true)
+  const showRemoveButton = () => {
+    const loggedUserJSON = window.localStorage.getItem('loggedBloglistUser')
+    const user = JSON.parse(loggedUserJSON)
+    if (blog.user.username === user.username) {
+      return (
+        <div>
+          <button onClick={remove}>Remove</button>
+        </div>
+      )
+    }
   }
   
   return (
@@ -40,6 +50,7 @@ const Blog = ({ blog, updateBlog }) => {
         {blog.url}<br />
         Likes:&nbsp; {blog.likes} &nbsp;<button onClick={update}>Like</button><br />
         {blog.author}
+        {showRemoveButton()}
       </div>
     </div>
   )
