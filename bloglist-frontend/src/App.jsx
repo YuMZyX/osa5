@@ -87,7 +87,6 @@ const App = () => {
 
   const deleteBlog = (id) => {
     const blog = blogs.find(b => b.id === id)
-    console.log(blog)
     if (window.confirm(`Remove ${blog.title}`)) {
       blogService.remove(id)
         .then(() => {
