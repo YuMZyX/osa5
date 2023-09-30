@@ -31,6 +31,7 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
   const showRemoveButton = () => {
     const loggedUserJSON = window.localStorage.getItem('loggedBloglistUser')
     const user = JSON.parse(loggedUserJSON)
+    if (!user) {return}
     if (blog.user.username === user.username) {
       return (
         <div>
@@ -41,11 +42,11 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
   }
   
   return (
-    <div style={blogStyle}>
-      <div style={hideWhenVisible}>
-        {blog.title} <button onClick={toggleVisibility}>View</button>
+    <div style={blogStyle} className='blog'>
+      <div style={hideWhenVisible} className='title'>
+        <span>{blog.title}</span><button onClick={toggleVisibility}>View</button>
       </div>
-      <div style={showWhenVisible}>
+      <div style={showWhenVisible} className='detailedInfo'>
         {blog.title} <button onClick={toggleVisibility}>Hide</button><br />
         {blog.url}<br />
         Likes:&nbsp; {blog.likes} &nbsp;<button onClick={update}>Like</button><br />
